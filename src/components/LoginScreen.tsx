@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Mail, Lock, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
-import logo from 'figma:asset/1c48c0d0410a0300d245194d4d6c84495a6138c4.png';
+import logo from '../assets/logo_main.png';
 
 interface LoginScreenProps {
   onLogin: (email: string, showProfileSetup: boolean) => void;
@@ -69,7 +69,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      
+
       if (isRegistering) {
         // РЕЄСТРАЦІЯ через Email → завжди показати екран "Оберіть нікнейм"
         setRegistrationSuccess(true);
@@ -93,15 +93,15 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
     // Симуляція Google OAuth
     const names = ['Олександр', 'Марія', 'Іван', 'Анна', 'Максим', 'Софія'];
     const surnames = ['Коваленко', 'Шевченко', 'Бойко', 'Мельник', 'Петренко', 'Іваненко'];
-    
+
     const randomName = names[Math.floor(Math.random() * names.length)];
     const randomSurname = surnames[Math.floor(Math.random() * surnames.length)];
     const generatedEmail = `${randomName}.${randomSurname}.pp.2025@lpnu.ua`;
-    
+
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      
+
       if (isRegistering) {
         // РЕЄСТРАЦІЯ через Google → завжди показати екран "Оберіть нікнейм"
         onLogin(generatedEmail, true); // true = показати ProfileSetup
@@ -138,11 +138,10 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Електронна пошта"
-                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
-                  fieldErrors.email 
-                    ? 'border-red-300 focus:ring-red-300' 
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${fieldErrors.email
+                    ? 'border-red-300 focus:ring-red-300'
                     : 'border-violet-200 focus:ring-violet-300'
-                }`}
+                  }`}
               />
             </div>
             {fieldErrors.email && (
@@ -162,11 +161,10 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="Введіть пароль"
-                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
-                  fieldErrors.password 
-                    ? 'border-red-300 focus:ring-red-300' 
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${fieldErrors.password
+                    ? 'border-red-300 focus:ring-red-300'
                     : 'border-violet-200 focus:ring-violet-300'
-                }`}
+                  }`}
               />
             </div>
             {fieldErrors.password && (
@@ -187,11 +185,10 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
                   placeholder="Підтвердіть пароль"
-                  className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${
-                    fieldErrors.confirmPassword 
-                      ? 'border-red-300 focus:ring-red-300' 
+                  className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 ${fieldErrors.confirmPassword
+                      ? 'border-red-300 focus:ring-red-300'
                       : 'border-violet-200 focus:ring-violet-300'
-                  }`}
+                    }`}
                 />
               </div>
               {fieldErrors.confirmPassword && (
