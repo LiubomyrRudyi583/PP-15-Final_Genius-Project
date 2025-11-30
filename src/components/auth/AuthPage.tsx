@@ -15,9 +15,11 @@ const AuthPage = () => {
         e.preventDefault();
         setLoading(true);
         setError('');
+        console.log("AuthPage: Submitting form", { isLogin, email });
 
         // Email validation for registration
         if (!isLogin && !email.endsWith('@lpnu.ua')) {
+            console.warn("AuthPage: Invalid email domain");
             setError("Будь ласка, використовуйте корпоративну пошту @lpnu.ua");
             setLoading(false);
             return;
@@ -25,11 +27,16 @@ const AuthPage = () => {
 
         try {
             if (isLogin) {
+                console.log("AuthPage: Attempting sign in");
                 await signInWithEmailAndPassword(auth, email, password);
+                console.log("AuthPage: Sign in successful");
             } else {
+                console.log("AuthPage: Attempting registration");
                 await createUserWithEmailAndPassword(auth, email, password);
+                console.log("AuthPage: Registration successful");
             }
         } catch (error: any) {
+            console.error("AuthPage: Auth error", error);
             setError(error.message || "Помилка автентифікації");
         } finally {
             setLoading(false);

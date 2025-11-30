@@ -17,19 +17,24 @@ export default function App() {
     const [activeTab, setActiveTab] = useState<'schedule' | 'settings'>('schedule');
 
     useEffect(() => {
+        console.log("App: Setting up auth listener");
         const unsubscribe = auth.onAuthStateChanged((user) => {
+            console.log("App: Auth state changed", user ? user.email : "null");
             if (user) {
                 const email = user.email || '';
                 const savedUser = localStorage.getItem('user_v2');
 
                 if (savedUser) {
+                    console.log("App: Found saved user in localStorage");
                     setUser(JSON.parse(savedUser));
                 } else {
+                    console.log("App: New user, starting setup");
                     // New user - needs setup
                     setTempEmail(email);
                     setIsSettingUp(true);
                 }
             } else {
+                console.log("App: User is null");
                 setUser(null);
             }
         });
