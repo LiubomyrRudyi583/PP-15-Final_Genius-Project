@@ -82,6 +82,7 @@ export default function App() {
         lastWeekChange: new Date().toISOString(),
         theme: 'light',
         customBackground: undefined,
+        backgroundId: 'default',
         gender: 'male' // Default gender for temp users
       };
       setUser(tempUser);
@@ -136,11 +137,14 @@ export default function App() {
   }
 
   // Головний інтерфейс
+  // At this point user is guaranteed to be non-null due to checks above
+  const currentUser = user!; // Non-null assertion since we checked above
+
   return (
     <div
-      className={`min-h-screen transition-colors ${user.theme === 'dark' ? 'dark' : ''}`}
+      className={`min-h-screen transition-colors ${currentUser.theme === 'dark' ? 'dark' : ''}`}
       style={{
-        background: getBackgroundForTheme(user.backgroundId, user.customBackground, user.theme),
+        background: getBackgroundForTheme(currentUser.backgroundId, currentUser.customBackground, currentUser.theme),
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
@@ -153,7 +157,7 @@ export default function App() {
             <div className="flex items-center gap-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-sm">
               <img src={logo} alt="ШО Logo" className="w-24 h-24 object-contain" />
               <div>
-                <p className="text-sm text-teal-600 dark:text-teal-400">{user.groupName} • Підгрупа {user.subgroup}</p>
+                <p className="text-sm text-teal-600 dark:text-teal-400">{currentUser.groupName} • Підгрупа {currentUser.subgroup}</p>
               </div>
             </div>
 
@@ -163,15 +167,15 @@ export default function App() {
                 onClick={() => setShowUserMenu(!showUserMenu)}
                 className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-sm hover:shadow-md transition-all"
               >
-                <span className="text-2xl">{user.avatar}</span>
-                <span className="text-gray-700 dark:text-gray-200">{user.nickname}</span>
+                <span className="text-2xl">{currentUser.avatar}</span>
+                <span className="text-gray-700 dark:text-gray-200">{currentUser.nickname}</span>
               </button>
 
               {showUserMenu && (
                 <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-lg py-2 z-50">
                   <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
                     <p className="text-sm text-gray-500 dark:text-gray-400">Увійшли як</p>
-                    <p className="text-sm text-gray-700 dark:text-gray-200 truncate">{user.email}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-200 truncate">{currentUser.email}</p>
                   </div>
                   <button
                     onClick={handleLogout}
@@ -255,17 +259,17 @@ export default function App() {
         <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-lg p-6">
           {activeTab === 'schedule' ? (
             <ScheduleView
-              subgroup={user.subgroup}
-              weekType={user.currentWeekType}
+              subgroup={currentUser.subgroup}
+              weekType={currentUser.currentWeekType}
               onWeekTypeChange={handleWeekTypeChange}
-              gender={user.gender}
+              gender={currentUser.gender}
             />
           ) : activeTab === 'homework' ? (
-            <HomeworkView currentUser={user.nickname} userSubgroup={user.subgroup} />
+            <HomeworkView currentUser={currentUser.nickname} userSubgroup={currentUser.subgroup} />
           ) : activeTab === 'download' ? (
             <DownloadView />
           ) : (
-            <SettingsView user={user} onUpdateUser={handleUpdateUser} />
+            <SettingsView user={currentUser} onUpdateUser={handleUpdateUser} onLogout={handleLogout} />
           )}
         </div>
       </div>
