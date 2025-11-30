@@ -1,4 +1,4 @@
-mport { useState } from 'react';
+import { useState } from 'react';
 import { X } from 'lucide-react';
 import { Post } from '../types';
 
