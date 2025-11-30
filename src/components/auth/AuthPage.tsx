@@ -15,29 +15,42 @@ const AuthPage = () => {
         e.preventDefault();
         setLoading(true);
         setError('');
-        console.log("AuthPage: Submitting form", { isLogin, email });
 
         // Email validation for registration
         if (!isLogin && !email.endsWith('@lpnu.ua')) {
-            console.warn("AuthPage: Invalid email domain");
             setError("Будь ласка, використовуйте корпоративну пошту @lpnu.ua");
             setLoading(false);
             return;
         }
 
         try {
+            console.log('[AuthPage] Attempting', isLogin ? 'login' : 'registration', 'for:', email);
+
             if (isLogin) {
-                console.log("AuthPage: Attempting sign in");
-                await signInWithEmailAndPassword(auth, email, password);
-                console.log("AuthPage: Sign in successful");
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                console.log('[AuthPage] Login successful:', userCredential.user.email);
             } else {
-                console.log("AuthPage: Attempting registration");
-                await createUserWithEmailAndPassword(auth, email, password);
-                console.log("AuthPage: Registration successful");
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                console.log('[AuthPage] Registration successful:', userCredential.user.email);
             }
         } catch (error: any) {
-            console.error("AuthPage: Auth error", error);
-            setError(error.message || "Помилка автентифікації");
+            console.error('[AuthPage] Authentication error:', error);
+
+            // Better error messages
+            let errorMessage = "Помилка автентифікації";
+            if (error.code === 'auth/user-not-found') {
+                errorMessage = "Користувача не знайдено. Спочатку зареєструйтесь.";
+            } else if (error.code === 'auth/wrong-password') {
+                errorMessage = "Неправильний пароль.";
+            } else if (error.code === 'auth/email-already-in-use') {
+                errorMessage = "Ця пошта вже використовується. Спробуйте увійти.";
+            } else if (error.code === 'auth/invalid-email') {
+                errorMessage = "Неправильний формат email.";
+            } else if (error.message) {
+                errorMessage = error.message;
+            }
+
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
