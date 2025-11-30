@@ -83,12 +83,14 @@ export default function App() {
         }
     }, [user?.theme]);
 
-    if (!user) {
-        return <AuthPage />;
-    }
-
+    // Check ProfileSetup FIRST before checking user
+    // This allows ProfileSetup to show even when user is null
     if (isSettingUp) {
         return <ProfileSetup email={tempEmail} onComplete={handleProfileComplete} />;
+    }
+
+    if (!user) {
+        return <AuthPage />;
     }
 
     return (
