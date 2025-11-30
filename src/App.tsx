@@ -80,7 +80,7 @@ export default function App() {
     }
 
     if (isSettingUp) {
-        return <ProfileSetup onComplete={handleProfileComplete} />;
+        return <ProfileSetup email={tempEmail} onComplete={handleProfileComplete} />;
     }
 
     return (
@@ -124,8 +124,8 @@ export default function App() {
                         <button
                             onClick={() => setActiveTab('schedule')}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${activeTab === 'schedule'
-                                    ? 'bg-orange-400 dark:bg-orange-600 text-white'
-                                    : 'text-gray-600 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-orange-900/30'
+                                ? 'bg-orange-400 dark:bg-orange-600 text-white'
+                                : 'text-gray-600 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-orange-900/30'
                                 }`}
                         >
                             <Calendar className="w-5 h-5" />
@@ -135,8 +135,8 @@ export default function App() {
                         <button
                             onClick={() => setActiveTab('settings')}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${activeTab === 'settings'
-                                    ? 'bg-orange-400 dark:bg-orange-600 text-white'
-                                    : 'text-gray-600 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-orange-900/30'
+                                ? 'bg-orange-400 dark:bg-orange-600 text-white'
+                                : 'text-gray-600 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-orange-900/30'
                                 }`}
                         >
                             <Settings className="w-5 h-5" />
@@ -150,9 +150,10 @@ export default function App() {
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {activeTab === 'schedule' && (
                     <ScheduleView
-                        currentWeekType={user.currentWeekType}
-                        userSubgroup={user.subgroup}
+                        weekType={user.currentWeekType}
+                        subgroup={user.subgroup}
                         gender={user.gender}
+                        onWeekTypeChange={(newType) => handleUpdateUser({ ...user, currentWeekType: newType })}
                     />
                 )}
                 {activeTab === 'settings' && (
