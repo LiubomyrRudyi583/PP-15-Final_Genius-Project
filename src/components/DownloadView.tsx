@@ -40,7 +40,7 @@ export function DownloadView() {
           </p>
 
           <a
-            href="https://github.com/YOUR_USERNAME/REPO_NAME/releases/download/v0.1.0/SHO.Setup.0.1.0.exe"
+            href="https://github.com/LiubomyrRudyi583/PP-15-Final_Genius-Project/releases/download/v0.1.0/SHO.Setup.0.1.0.exe"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full text-white py-3 rounded-lg hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2 font-medium shadow-md"
@@ -75,7 +75,7 @@ export function DownloadView() {
           </p>
 
           <a
-            href="https://github.com/YOUR_USERNAME/REPO_NAME/releases/download/v0.1.0/SHO-0.1.0-win.zip"
+            href="https://github.com/LiubomyrRudyi583/PP-15-Final_Genius-Project/releases/download/v0.1.0/SHO-0.1.0-win.zip"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full text-white py-3 rounded-lg hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2 font-medium shadow-md"
